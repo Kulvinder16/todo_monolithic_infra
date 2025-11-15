@@ -1,0 +1,21 @@
+
+trigger:
+- main
+
+pool: default
+
+steps:
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: 'latest'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'az-ado-connection-007'
+    backendAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
+    backendAzureRmResourceGroupName: 'rgkulvinder'
+    backendAzureRmStorageAccountName: 'stgkulvinder1'
+    backendAzureRmContainerName: 'container1'
+    backendAzureRmKey: 'dev.terraform.tfstate'
