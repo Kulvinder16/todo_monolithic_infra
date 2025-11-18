@@ -13,6 +13,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
     backendServiceArm: 'az-ado-connection-007'
     backendAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
     backendAzureRmResourceGroupName: 'rgkulvinder'
