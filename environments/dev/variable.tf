@@ -21,15 +21,15 @@ variable "storage_accounts" {
 
 variable "vnets" {
   type = map(object({
-    name          = string
-    location      = string
+    name                = string
+    location            = string
     resource_group_name = string
-    address_space = list(string)
-    dns_servers   = list(string)
+    address_space       = list(string)
+    dns_servers         = list(string)
     subnets = list(object(
       {
         name = string
-        address_prefixes = list(string) }
+      address_prefixes = list(string) }
     ))
     }
   ))
@@ -41,7 +41,7 @@ variable "pip" {
       resource_group_name = string
       location            = string
       allocation_method   = string
-      tags = optional(map(string))
+      tags                = optional(map(string))
   }))
 
 }

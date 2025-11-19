@@ -43,27 +43,33 @@ storage_accounts = {
 }
 
 vnets = {
-v1 = {
-name                = "vnet1"
-location            = "central India"
-resource_group_name = "rg_1"
-address_space       = ["10.0.0.0/16"]
-dns_servers         = ["10.0.0.4", "10.0.0.5"]
+  v1 = {
+    name                = "vnet1"
+    location            = "central India"
+    resource_group_name = "rg_1"
+    address_space       = ["10.0.0.0/16"]
+    dns_servers         = ["10.0.0.4", "10.0.0.5"]
 
-subnets = [
-{  name           = "subnet1"
-  address_prefixes = ["10.0.1.0/24"]},
-{
-  name           = "subnet2"
-  address_prefixes = ["10.0.2.0/24"]
-}]
-}
+    subnets = [
+      { name = "subnet1"
+      address_prefixes = ["10.0.1.0/24"] },
+      {
+        name             = "subnet2"
+        address_prefixes = ["10.0.2.0/24"]
+    }]
+  }
 }
 
 pip = {
-  name = "todo_pip"
-  resource_group_name = "rg_1"
-  location = "central india"
+  pip1 = {
+    name                = "todo_pip"
+    resource_group_name = "rg_1"
+    location            = "central india"
+    allocation_method   = "Static"
+    tags = {
+      environment = "dev"
+    }
 
+  }
 }
 

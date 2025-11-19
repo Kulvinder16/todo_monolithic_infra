@@ -16,6 +16,6 @@
 
 module "pip" {
   source = "../../modules/azurerm_public_ip"
-  pip = var.pip
+  pip    = var.pip
 
 }
