@@ -1,0 +1,27 @@
+trigger:
+- main
+- features/*
+
+pool: default
+
+steps:
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+    backendServiceArm: 'az-ado-connection'
+    backendAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
+    backendAzureRmResourceGroupName: 'rgkulvinder'
+    backendAzureRmStorageAccountName: 'stgkulvinder1'
+    backendAzureRmContainerName: 'container1'
+    backendAzureRmKey: 'dev.terraform.tfstate'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+    environmentServiceNameAzureRM: 'az-ado-connection'
+    environmentAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
