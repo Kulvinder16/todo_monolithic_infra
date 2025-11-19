@@ -1,0 +1,19 @@
+trigger:
+- main
+- features/*
+
+pool: DESKTOP-E41OKDD
+
+steps:
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+    backendServiceArm: 'az-ado-connection'
+    backendAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
+    backendAzureRmResourceGroupName: 'rgkulvinder'
+    backendAzureRmStorageAccountName: 'stgkulvinder1'
+    backendAzureRmContainerName: 'container1'
+    backendAzureRmKey: 'dev.terraform.tfstate'
