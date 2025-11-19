@@ -6,9 +6,6 @@ resource "azurerm_public_ip" "todo_pip" {
   resource_group_name = each.value.resource_group_name
   location            = each.value.location
   allocation_method   = each.value.allocation_method
-
-  tags = {
-    environment = each.value.environment
-  }
+  tags = each.value.tags
 
 }
