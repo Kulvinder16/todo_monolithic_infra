@@ -9,19 +9,11 @@ resource_groups = {
     }
   }
 
-  rg2 = {
-    name     = "rg_2"
-    location = "Central India"
-    tags = {
-      environment = "dev"
-      department  = "IT"
-    }
-  }
 }
 
 storage_accounts = {
   s1 = {
-    name                     = "stg15"
+    name                     = "stg16"
     resource_group_name      = "rg_1"
     location                 = "centralindia"
     account_tier             = "Standard"
@@ -29,18 +21,7 @@ storage_accounts = {
 
     tags = {
     environment = "dev" }
-  }
-  s2 = {
-    name                     = "stg13"
-    resource_group_name      = "rg_2"
-    location                 = "centralindia"
-    account_tier             = "Standard"
-    account_replication_type = "GRS"
-
-    tags = {
-    environment = "dev" }
-  }
-}
+  }}
 
 vnets = {
   v1 = {
@@ -48,13 +29,14 @@ vnets = {
     location            = "central India"
     resource_group_name = "rg_1"
     address_space       = ["10.0.0.0/16"]
-    dns_servers         = ["10.0.0.4", "10.0.0.5"]
-
+    tags = {
+      environment = "dev"
+    }
     subnets = [
-      { name = "subnet1"
+      { name = "frontend-subnet-16"
       address_prefixes = ["10.0.1.0/24"] },
       {
-        name             = "subnet2"
+        name             = "backend-subnet-16"
         address_prefixes = ["10.0.2.0/24"]
     }]
   }
@@ -62,14 +44,32 @@ vnets = {
 
 pip = {
   pip1 = {
-    name                = "todo_pip"
+    name                = "frontend_pip_16"
     resource_group_name = "rg_1"
     location            = "central india"
     allocation_method   = "Static"
     tags = {
+      app = "frontend16"
       environment = "dev"
     }
-
+  }
+    pip2 = {
+    name                = "backend_pip_16"
+    resource_group_name = "rg_1"
+    location            = "central india"
+    allocation_method   = "Static"
+    tags = {
+      app = "backend16"
+      environment = "dev"
+    }
   }
 }
 
+
+kv = {
+kv1 = {
+  kv_name = "key-1"
+  location = "central india"
+  resource_group_name = "rg_1"
+}
+}

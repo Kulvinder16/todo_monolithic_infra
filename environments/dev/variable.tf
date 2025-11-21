@@ -25,7 +25,6 @@ variable "vnets" {
     location            = string
     resource_group_name = string
     address_space       = list(string)
-    dns_servers         = list(string)
     subnets = list(object(
       {
         name = string
@@ -44,4 +43,14 @@ variable "pip" {
       tags                = optional(map(string))
   }))
 
+}
+
+variable "kv" {
+  type = map(object(
+    {
+        kv_name = string
+  location = string
+  resource_group_name = string
+    }
+  ))
 }
