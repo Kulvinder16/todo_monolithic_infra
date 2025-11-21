@@ -4,7 +4,7 @@ variable "vnets" {
     location      = string
     resource_group_name = string
     address_space = list(string)
-    dns_servers   = list(string)
+    tags = optional(map(string))
     subnets = list(object(
       {
         name = string
