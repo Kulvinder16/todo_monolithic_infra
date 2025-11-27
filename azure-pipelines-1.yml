@@ -4,36 +4,78 @@ trigger:
 
 pool: default
 
-steps:
-- task: TerraformInstaller@1
-  inputs:
-    terraformVersion: 'latest'
+jobs:
+- job: InitToPlan
+  displayName: InitToPlan
+  pool: default
+  steps:
+  - task: TerraformInstaller@1
+    inputs:
+      terraformVersion: 'latest'
+  - task: TerraformTask@5
+    inputs:
+      provider: 'azurerm'
+      command: 'init'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+      backendServiceArm: 'az-ado-connection'
+      backendAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
+      backendAzureRmResourceGroupName: 'rgkulvinder'
+      backendAzureRmStorageAccountName: 'stgkulvinder1'
+      backendAzureRmContainerName: 'container1'
+      backendAzureRmKey: 'dev.terraform.tfstate'
+  - task: TerraformTask@5
+    inputs:
+      provider: 'azurerm'
+      command: 'validate'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+  - task: TerraformTask@5
+    inputs:
+      provider: 'azurerm'
+      command: 'custom'
+      outputTo: 'console'
+      customCommand: 'fmt'
+      environmentServiceNameAzureRM: 'az-ado-connection'
+      environmentAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
+  - task: TerraformTask@5
+    inputs:
+      provider: 'azurerm'
+      command: 'plan'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/environment/dev'
+      environmentServiceNameAzureRM: 'az-ado-connection'
+      environmentAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
 
-- task: TerraformTask@5
-  inputs:
-    provider: 'azurerm'
-    command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
-    backendServiceArm: 'az-ado-connection'
-    backendAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
-    backendAzureRmResourceGroupName: 'rgkulvinder'
-    backendAzureRmStorageAccountName: 'stgkulvinder1'
-    backendAzureRmContainerName: 'container1'
-    backendAzureRmKey: 'dev.terraform.tfstate'
+- job: ManualValidationCheck
+  displayName: ManualValidationCheck
+  pool: server
+  steps:
+  - task: ManualValidation@1
+    inputs:
+      notifyUsers: 'Kulvinder@shivriteshivgmail.onmicrosoft.com'
+      approvers: 'Kulvinder@shivriteshivgmail.onmicrosoft.com'
 
-- task: TerraformTask@5
-  inputs:
-    provider: 'azurerm'
-    command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
-    environmentServiceNameAzureRM: 'az-ado-connection'
-    environmentAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
+- job: Apply
+  displayName: Apply
+  pool: default
+  steps:
+  - task: TerraformTask@5
+    inputs:
+      provider: 'azurerm'
+      command: 'init'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+      backendServiceArm: 'az-ado-connection'
+      backendAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
+      backendAzureRmResourceGroupName: 'rgkulvinder'
+      backendAzureRmStorageAccountName: 'stgkulvinder1'
+      backendAzureRmContainerName: 'container1'
+      backendAzureRmKey: 'dev.terraform.tfstate'
 
-- task: TerraformTask@5
-  inputs:
-    provider: 'azurerm'
-    command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
-    commandOptions: '--auto-approve'
-    environmentServiceNameAzureRM: 'az-ado-connection'
-    environmentAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
+  - task: TerraformTask@5
+    inputs:
+      provider: 'azurerm'
+      command: 'apply'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+      commandOptions: '--auto-approve'
+      environmentServiceNameAzureRM: 'az-ado-connection'
+      environmentAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
+
+  
