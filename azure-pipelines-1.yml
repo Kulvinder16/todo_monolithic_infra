@@ -25,3 +25,12 @@ steps:
     workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
     environmentServiceNameAzureRM: 'az-ado-connection'
     environmentAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/environment/dev'
+    commandOptions: '--auto-approve'
+    environmentServiceNameAzureRM: 'az-ado-connection'
+    environmentAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
