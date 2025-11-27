@@ -41,8 +41,9 @@ jobs:
       environmentServiceNameAzureRM: 'az-ado-connection'
       environmentAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
 
-- job: MannualValidation
+- job: ManualValidation
   displayName: MannualValidation
+  dependsOn: InitToPlan
   pool: server
   steps:
   - task: ManualValidation@1
@@ -52,6 +53,7 @@ jobs:
 
 - job: Apply
   displayName: Apply
+  dependsOn: ManualValidation
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
   steps:
   - task: TerraformTask@5
