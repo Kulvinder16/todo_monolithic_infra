@@ -33,7 +33,7 @@ jobs:
     inputs:
       provider: 'azurerm'
       command: 'validate'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/environment/dev'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
   - task: TerraformTask@5
     inputs:
       provider: 'azurerm'
@@ -72,7 +72,7 @@ jobs:
     inputs:
       provider: 'azurerm'
       command: 'apply'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/environment/dev'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
       commandOptions: '--auto-approve'
       environmentServiceNameAzureRM: 'az-ado-connection'
       environmentAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
