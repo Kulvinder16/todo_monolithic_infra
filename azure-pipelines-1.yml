@@ -7,7 +7,6 @@ pool: default
 jobs:
 - job: InitToPlan
   displayName: InitToPlan
-  pool: default
   steps: 
   - task: TerraformTask@5
     inputs:
@@ -38,7 +37,7 @@ jobs:
     inputs:
       provider: 'azurerm'
       command: 'plan'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/environment/dev'
+      workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
       environmentServiceNameAzureRM: 'az-ado-connection'
       environmentAzureRmOverrideSubscriptionID: '79c26feb-0cf7-4c69-884b-12bcef586d4c'
 
@@ -53,7 +52,6 @@ jobs:
 
 - job: Apply
   displayName: Apply
-  pool: default
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
   steps:
   - task: TerraformTask@5
