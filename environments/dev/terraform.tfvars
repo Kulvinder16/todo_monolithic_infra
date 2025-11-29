@@ -71,5 +71,6 @@ kv1 = {
   kv_name = "key-1"
   location = "central india"
   resource_group_name = "rg_1"
+  sp_object_id = "92bb784a-716c-4200-8483-9303ecb16df2" 
 }
 }
