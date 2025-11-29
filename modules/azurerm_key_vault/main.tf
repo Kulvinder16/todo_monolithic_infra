@@ -18,6 +18,7 @@ resource "azurerm_key_vault" "todo_infra_kv" {
 
     key_permissions = [
       "Get",
+      "List"
     ]
 
     secret_permissions = [
