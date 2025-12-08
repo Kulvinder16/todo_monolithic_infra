@@ -48,9 +48,12 @@ variable "pip" {
 variable "kv" {
   type = map(object(
     {
-        kv_name = string
-  location = string
-  resource_group_name = string
+      kv_name             = string
+      location            = string
+      resource_group_name = string
     }
   ))
+}
+
+variable "vms" {
 }

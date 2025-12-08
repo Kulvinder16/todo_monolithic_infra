@@ -5,26 +5,32 @@ module "rgs" {
 }
 
 module "stgs" {
-  source = "../../modules/storage_account"
-  depends_on = [ module.rgs ]
-  storage_accounts = var.storage_accounts  
+  source           = "../../modules/storage_account"
+  depends_on       = [module.rgs]
+  storage_accounts = var.storage_accounts
 }
 
 module "vnets" {
-  source = "../../modules/azurerm-networking"
-  depends_on = [ module.rgs ]
-  vnets = var.vnets
+  source     = "../../modules/azurerm-networking"
+  depends_on = [module.rgs]
+  vnets      = var.vnets
 }
 
 module "pip" {
-  source = "../../modules/azurerm_public_ip"
-  depends_on = [ module.rgs ]
-  pip    = var.pip
+  source     = "../../modules/azurerm_public_ip"
+  depends_on = [module.rgs]
+  pip        = var.pip
 
 }
 
 module "key_vault" {
-  source = "../../modules/azurerm_key_vault"
-  depends_on = [ module.rgs ]
-  kv = var.kv 
+  source     = "../../modules/azurerm_key_vault"
+  depends_on = [module.rgs]
+  kv         = var.kv
+}
+
+module "VM_infra" {
+  source     = "../../modules/azurerm_compute"
+  depends_on = [module.rgs, module.pip, module.key_vault, module.vnets, module.pip]
+  vms        = var.vms
 }
