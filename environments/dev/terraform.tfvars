@@ -21,7 +21,7 @@ storage_accounts = {
 
     tags = {
     environment = "dev" }
-  }}
+} }
 
 vnets = {
   v1 = {
@@ -49,17 +49,17 @@ pip = {
     location            = "central india"
     allocation_method   = "Static"
     tags = {
-      app = "frontend16"
+      app         = "frontend16"
       environment = "dev"
     }
   }
-    pip2 = {
+  pip2 = {
     name                = "backend_pip_16"
     resource_group_name = "rg_1"
     location            = "central india"
     allocation_method   = "Static"
     tags = {
-      app = "backend16"
+      app         = "backend16"
       environment = "dev"
     }
   }
@@ -67,30 +67,30 @@ pip = {
 
 
 kv = {
-kv1 = {
-  kv_name = "key-1"
-  location = "central india"
-  resource_group_name = "rg_1"
-}
+  kv1 = {
+    kv_name             = "key-1"
+    location            = "central india"
+    resource_group_name = "rg_1"
+  }
 }
 
 
 vms = {
-VM_1 = {
-        subnet_name = "frontend-subnet-16"
-      v_net_name = "vnet1"
-      kv_name = "key-1"
-      vm_size = "Standard_F2"
-      nic_name = "frontend_nic_16"
-      location = "central india"
-      resource_group_name = "rg_1"
-      vm_name = "frontendvm_16"
-      pip_name = "frontend_pip_16"
-      source_image_reference = {
+  VM_1 = {
+    subnet_name         = "frontend-subnet-16"
+    v_net_name          = "vnet1"
+    kv_name             = "key-1"
+    vm_size             = "Standard_F2"
+    nic_name            = "frontend_nic_16"
+    location            = "central india"
+    resource_group_name = "rg_1"
+    vm_name             = "frontendvm_16"
+    pip_name            = "frontend_pip_16"
+    source_image_reference = {
       vm_publisher = "Canonical"
-      vm_offer = "0001-com-ubuntu-server-jammy"
-      vm_sku = "22_04-lts"
-      vm_version = "latest"
-      }
-}
+      vm_offer     = "0001-com-ubuntu-server-jammy"
+      vm_sku       = "22_04-lts"
+      vm_version   = "latest"
+    }
+  }
 }
