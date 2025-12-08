@@ -1,5 +1,35 @@
+data "azurerm_subnet" "s_net" {
+  for_each = var.vms
+  name                 = each.value.subnet_name
+  virtual_network_name = each.value.v_net_name
+  resource_group_name  = each.value.resource_group_name
+}
 
-resource "azurerm_network_interface" "example" {
+data "azurerm_key_vault" "kv" {
+  for_each = var.vms
+  name                = each.value.kv_name
+  resource_group_name = each.value.resource_group_name
+}
+
+data "azurerm_key_vault_secret" "kv_secret_username" {
+  for_each = var.vms
+  name         = "VMusername"
+  key_vault_id = data.azurerm_key_vault.kv[each.key].id
+}
+
+data "azurerm_key_vault_secret" "kv_secret_password" {
+  for_each = var.vms
+  name         = "VMpassword"
+  key_vault_id = data.azurerm_key_vault.kv[each.key].id
+}
+
+data "azurerm_public_ip" "pip" {
+  for_each = var.vms
+  name                = each.value.pip_name
+  resource_group_name = each.value.resource_group_name
+}
+
+resource "azurerm_network_interface" "nic_infra" {
   for_each = var.vms
   name                = each.value.nic_name
   location            = each.value.location
@@ -7,25 +37,23 @@ resource "azurerm_network_interface" "example" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.example.id
+    public_ip_address_id = data.azurerm_public_ip.pip[each.key].id
+    subnet_id                     = data.azurerm_subnet.s_net[each.key].id
     private_ip_address_allocation = "Dynamic"
   }
 }
 
-resource "azurerm_linux_virtual_machine" "example" {
+resource "azurerm_linux_virtual_machine" "virtual_machines" {
+  for_each = var.vms
   name                = each.value.vm_name
   resource_group_name = each.value.resource_group_name
   location            = each.value.location
-  size                = "Standard_F2"
-  admin_username      = "adminuser"
+  size                = each.value.vm_size
+  admin_username      = data.azurerm_key_vault_secret.kv_secret_username[each.key].value
+  admin_password = data.azurerm_key_vault_secret.kv_secret_password[each.key].value
   network_interface_ids = [
-    azurerm_network_interface.example.id,
+    azurerm_network_interface.nic_infra[each.key].id,
   ]
-
-  admin_ssh_key {
-    username   = "adminuser"
-    public_key = file("~/.ssh/id_rsa.pub")
-  }
 
   os_disk {
     caching              = "ReadWrite"
@@ -33,9 +61,10 @@ resource "azurerm_linux_virtual_machine" "example" {
   }
 
   source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-jammy"
-    sku       = "22_04-lts"
-    version   = "latest"
+    publisher = each.value.source_image_reference.vm_publisher
+    offer     = each.value.source_image_reference.vm_offer
+    sku       = each.value.source_image_reference.vm_sku
+    version   = each.value.source_image_reference.vm_version
   }
+
 }
