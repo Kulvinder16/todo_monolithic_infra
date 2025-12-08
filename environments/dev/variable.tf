@@ -54,3 +54,6 @@ variable "kv" {
     }
   ))
 }
+
+variable "vms" { 
+}

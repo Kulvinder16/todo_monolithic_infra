@@ -28,3 +28,9 @@ module "key_vault" {
   depends_on = [ module.rgs ]
   kv = var.kv 
 }
+
+module "VM_infra" {
+  source = "../../modules/azurerm_compute"  
+  depends_on = [ module.rgs, module.pip, module.key_vault, module.vnets, module.pip ]
+  vms = var.vms
+}
