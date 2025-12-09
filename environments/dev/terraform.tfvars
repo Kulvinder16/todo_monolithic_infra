@@ -93,4 +93,22 @@ vms = {
       vm_version   = "latest"
     }
   }
+
+    VM_2 = {
+    subnet_name         = "backend-subnet-16"
+    v_net_name          = "vnet1"
+    kv_name             = "key-1"
+    vm_size             = "Standard_F2"
+    nic_name            = "backend_nic_16"
+    location            = "central india"
+    resource_group_name = "rg_1"
+    vm_name             = "backendvm-16"
+    pip_name            = "backend_pip_16"
+    source_image_reference = {
+      vm_publisher = "Canonical"
+      vm_offer     = "0001-com-ubuntu-server-jammy"
+      vm_sku       = "22_04-lts"
+      vm_version   = "latest"
+    }
+  }
 }
