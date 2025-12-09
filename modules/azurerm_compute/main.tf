@@ -49,6 +49,7 @@ resource "azurerm_linux_virtual_machine" "virtual_machines" {
   resource_group_name = each.value.resource_group_name
   location            = each.value.location
   size                = each.value.vm_size
+  disable_password_authentication = false
   admin_username      = data.azurerm_key_vault_secret.kv_secret_username[each.key].value
   admin_password = data.azurerm_key_vault_secret.kv_secret_password[each.key].value
   network_interface_ids = [
