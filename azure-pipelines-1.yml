@@ -48,8 +48,8 @@ jobs:
   steps:
   - task: ManualValidation@1
     inputs:
-      notifyUsers: 'Kulvinder@shivriteshivgmail.onmicrosoft.com'
-      approvers: 'Kulvinder@shivriteshivgmail.onmicrosoft.com'
+      notifyUsers: 'Kulvinder@harshitasumit1gmail.onmicrosoft.com'
+      approvers: 'Kulvinder@harshitasumit1gmail.onmicrosoft.com'
 
 - job: Apply
   displayName: Apply
