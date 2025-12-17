@@ -64,7 +64,7 @@ jobs:
       backendServiceArm: 'AZ-ADO-connection-16'
       backendAzureRmOverrideSubscriptionID: '00ad737d-c579-441c-8386-0551f3fc4bf9'
       backendAzureRmResourceGroupName: 'rgkulvinder'
-      backendAzureRmStorageAccountName: 'stgkulvinder1'
+      backendAzureRmStorageAccountName: 'stgkulvinder'
       backendAzureRmContainerName: 'container1'
       backendAzureRmKey: 'dev.terraform.tfstate'
 
