@@ -1,43 +1,43 @@
-module "rgs" {
-  source          = "../../modules/azurerm_resource_groups"
-  resource_groups = var.resource_groups
+# module "rgs" {
+#   source          = "../../modules/azurerm_resource_groups"
+#   resource_groups = var.resource_groups
 
-}
+# }
 
-module "stgs" {
-  source           = "../../modules/storage_account"
-  depends_on       = [module.rgs]
-  storage_accounts = var.storage_accounts
-}
+# module "stgs" {
+#   source           = "../../modules/storage_account"
+#   depends_on       = [module.rgs]
+#   storage_accounts = var.storage_accounts
+# }
 
-module "vnets" {
-  source     = "../../modules/azurerm-networking"
-  depends_on = [module.rgs]
-  vnets      = var.vnets
-}
+# module "vnets" {
+#   source     = "../../modules/azurerm-networking"
+#   depends_on = [module.rgs]
+#   vnets      = var.vnets
+# }
 
-module "pip" {
-  source     = "../../modules/azurerm_public_ip"
-  depends_on = [module.rgs]
-  pip        = var.pip
+# module "pip" {
+#   source     = "../../modules/azurerm_public_ip"
+#   depends_on = [module.rgs]
+#   pip        = var.pip
 
-}
+# }
 
-module "key_vault" {
-  source     = "../../modules/azurerm_key_vault"
-  depends_on = [module.rgs]
-  kv         = var.kv
-}
+# module "key_vault" {
+#   source     = "../../modules/azurerm_key_vault"
+#   depends_on = [module.rgs]
+#   kv         = var.kv
+# }
 
-module "VM_infra" {
-  source     = "../../modules/azurerm_compute"
-  depends_on = [module.rgs, module.pip, module.key_vault, module.vnets, module.pip]
-  vms        = var.vms
-}
+# module "VM_infra" {
+#   source     = "../../modules/azurerm_compute"
+#   depends_on = [module.rgs, module.pip, module.key_vault, module.vnets, module.pip]
+#   vms        = var.vms
+# }
 
-module "todo_sql_server" {
-  depends_on = [ module.rgs, module.key_vault ]
-  source = "../../modules/azurerm_sql_server"
-  sql_server = var.sql_server
+# module "todo_sql_server" {
+#   depends_on = [ module.rgs, module.key_vault ]
+#   source = "../../modules/azurerm_sql_server"
+#   sql_server = var.sql_server
   
-}
+# }
