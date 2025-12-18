@@ -13,13 +13,13 @@ data "azurerm_key_vault" "kv" {
 
 data "azurerm_key_vault_secret" "kv_secret_username" {
   for_each = var.vms
-  name         = "VMusername"
+  name         = each.value.vm_username
   key_vault_id = data.azurerm_key_vault.kv[each.key].id
 }
 
 data "azurerm_key_vault_secret" "kv_secret_password" {
   for_each = var.vms
-  name         = "VMpassword"
+  name         = each.value.vm_password
   key_vault_id = data.azurerm_key_vault.kv[each.key].id
 }
 

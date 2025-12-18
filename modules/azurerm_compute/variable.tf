@@ -9,6 +9,8 @@ variable "vms" {
       location = string
       resource_group_name = string
       vm_name = string
+      vm_username = string
+      vm_password = string
       source_image_reference = map(string)
     }))
   
