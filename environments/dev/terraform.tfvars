@@ -13,7 +13,7 @@ resource_groups = {
 
 storage_accounts = {
   s1 = {
-    name                     = "stg16"
+    name                     = "stg1990"
     resource_group_name      = "rg_1"
     location                 = "centralindia"
     account_tier             = "Standard"
@@ -80,7 +80,7 @@ vms = {
     subnet_name         = "frontend-subnet-16"
     v_net_name          = "vnet1"
     kv_name             = "key-1"
-    vm_size             = "Standard_F2"
+    vm_size             = "Standard_B2ats"
     nic_name            = "frontend_nic_16"
     location            = "central india"
     resource_group_name = "rg_1"
@@ -100,7 +100,7 @@ vms = {
     subnet_name         = "backend-subnet-16"
     v_net_name          = "vnet1"
     kv_name             = "key-1"
-    vm_size             = "Standard_F2"
+    vm_size             = "Standard_B2ats"
     nic_name            = "backend_nic_16"
     location            = "central india"
     resource_group_name = "rg_1"
@@ -123,7 +123,7 @@ Server_1 = {
 resource_group_name = "rg_1"
 location = "Central India"
 db_username = "db-username"
-db_password = "db-password"
+db_password = "db-password1"
 server_name = "todo-infra-server"
 }
 }
