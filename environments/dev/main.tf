@@ -34,3 +34,10 @@ module "VM_infra" {
   depends_on = [module.rgs, module.pip, module.key_vault, module.vnets, module.pip]
   vms        = var.vms
 }
+
+module "todo_sql_server" {
+  depends_on = [ module.rgs, module.key_vault ]
+  source = "../../modules/azurerm_sql_server"
+  sql_server = var.sql_server
+  
+}

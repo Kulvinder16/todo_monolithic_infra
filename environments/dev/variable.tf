@@ -57,3 +57,7 @@ variable "kv" {
 
 variable "vms" {
 }
+
+variable "sql_server" {
+  
+}

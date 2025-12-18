@@ -85,6 +85,8 @@ vms = {
     location            = "central india"
     resource_group_name = "rg_1"
     vm_name             = "frontendvm-16"
+    vm_username = "frontendVM"
+    vm_password = "frontend-password"
     pip_name            = "frontend_pip_16"
     source_image_reference = {
       vm_publisher = "Canonical"
@@ -103,6 +105,8 @@ vms = {
     location            = "central india"
     resource_group_name = "rg_1"
     vm_name             = "backendvm-16"
+    vm_username = "backendVM"
+    vm_password = "backend-password"
     pip_name            = "backend_pip_16"
     source_image_reference = {
       vm_publisher = "Canonical"
@@ -111,4 +115,15 @@ vms = {
       vm_version   = "latest"
     }
   }
+}
+
+sql_server = {
+Server_1 = {
+  kv_name = "key-1"
+resource_group_name = "rg_1"
+location = "Central India"
+db_username = "db-username"
+db_password = "db-password"
+server_name = "todo-infra-server"
+}
 }
