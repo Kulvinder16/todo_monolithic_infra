@@ -1,7 +1,7 @@
 resource_groups = {
   rg1 = {
     name       = "rg_1"
-    location   = "Central India"
+    location   = "canadacentral"
     managed_by = null
     tags = {
       environment = "production"
@@ -15,7 +15,7 @@ storage_accounts = {
   s1 = {
     name                     = "stg1990"
     resource_group_name      = "rg_1"
-    location                 = "centralindia"
+    location                 = "canadacentral"
     account_tier             = "Standard"
     account_replication_type = "GRS"
 
@@ -26,7 +26,7 @@ storage_accounts = {
 vnets = {
   v1 = {
     name                = "vnet1"
-    location            = "central India"
+    location            = "canadacentral"
     resource_group_name = "rg_1"
     address_space       = ["10.0.0.0/16"]
     tags = {
@@ -46,7 +46,7 @@ pip = {
   pip1 = {
     name                = "frontend_pip_16"
     resource_group_name = "rg_1"
-    location            = "central india"
+    location            = "canadacentral"
     allocation_method   = "Static"
     tags = {
       app         = "frontend16"
@@ -56,7 +56,7 @@ pip = {
   pip2 = {
     name                = "backend_pip_16"
     resource_group_name = "rg_1"
-    location            = "central india"
+    location            = "canadacentral"
     allocation_method   = "Static"
     tags = {
       app         = "backend16"
@@ -68,8 +68,8 @@ pip = {
 
 kv = {
   kv1 = {
-    kv_name             = "key-1"
-    location            = "central india"
+    kv_name             = "key-2"
+    location            = "canadacentral"
     resource_group_name = "rg_1"
   }
 }
@@ -79,14 +79,14 @@ vms = {
   VM_1 = {
     subnet_name         = "frontend-subnet-16"
     v_net_name          = "vnet1"
-    kv_name             = "key-1"
-    vm_size             = "Standard_F1"
+    kv_name             = "key-2"
+    vm_size             = "Standard_B2ats_v2"
     nic_name            = "frontend_nic_16"
-    location            = "centralindia"
+    location            = "canadacentral"
     resource_group_name = "rg_1"
     vm_name             = "frontendvm-16"
-    vm_username = "frontendVM"
-    vm_password = "frontend-password"
+    vm_username         = "frontendVM"
+    vm_password         = "frontend-password"
     pip_name            = "frontend_pip_16"
     source_image_reference = {
       vm_publisher = "Canonical"
@@ -96,17 +96,17 @@ vms = {
     }
   }
 
-    VM_2 = {
+  VM_2 = {
     subnet_name         = "backend-subnet-16"
     v_net_name          = "vnet1"
-    kv_name             = "key-1"
-    vm_size             = "Standard_F1"
+    kv_name             = "key-2"
+    vm_size             = "Standard_B2ats_v2"
     nic_name            = "backend_nic_16"
-    location            = "centralindia"
+    location            = "canadacentral"
     resource_group_name = "rg_1"
     vm_name             = "backendvm-16"
-    vm_username = "backendVM"
-    vm_password = "backend-password"
+    vm_username         = "backendVM"
+    vm_password         = "backend-password"
     pip_name            = "backend_pip_16"
     source_image_reference = {
       vm_publisher = "Canonical"
@@ -118,12 +118,22 @@ vms = {
 }
 
 sql_server = {
-Server_1 = {
-  kv_name = "key-1"
-resource_group_name = "rg_1"
-location = "Central India"
-db_username = "db-username"
-db_password = "db-password1"
-server_name = "todo-infra-server"
+  Server_1 = {
+    kv_name             = "key-2"
+    resource_group_name = "rg_1"
+    location            = "canadacentral"
+    db_username         = "db-username"
+    db_password         = "db-password1"
+    server_name         = "todo-infra-server"
+  }
 }
+
+sql_database16 = {
+db_1 = {
+  server_name = "todo-infra-server"
+  resource_group_name = "rg_1"
+  db_name = "database-16"
+  max_size_gb = 2
+}
+
 }

@@ -4,7 +4,7 @@ resource "azurerm_mssql_server" "todo_sql_server" {
   resource_group_name          = each.value.resource_group_name
   location                     = each.value.location
   version                      = "12.0"
-  administrator_login          = data.azurerm_key_vault_secret.kv_secret_db_username[each.key].id
-  administrator_login_password = data.azurerm_key_vault_secret.kv_secret_db_password[each.key].id
+  administrator_login          = data.azurerm_key_vault_secret.kv_secret_db_username[each.key].value
+  administrator_login_password = data.azurerm_key_vault_secret.kv_secret_db_password[each.key].value
   minimum_tls_version          = "1.2"
 }

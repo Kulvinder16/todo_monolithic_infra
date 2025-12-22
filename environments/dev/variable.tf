@@ -59,5 +59,7 @@ variable "vms" {
 }
 
 variable "sql_server" {
-  
+}
+
+variable "sql_database16" {
 }
