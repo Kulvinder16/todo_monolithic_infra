@@ -6,73 +6,77 @@ pool: default
 
 jobs:
 - job: InitToPlan
-  displayName: InitToPlan
-  steps: 
-  - task: TerraformTask@5
-    inputs:
-      provider: 'azurerm'
-      command: 'init'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
-      backendServiceArm: 'AZ-ADO-connection-16'
-      backendAzureRmOverrideSubscriptionID: '00ad737d-c579-441c-8386-0551f3fc4bf9'
-      backendAzureRmResourceGroupName: 'rgkulvinder'
-      backendAzureRmStorageAccountName: 'stgkulvinder'
-      backendAzureRmContainerName: 'container1'
-      backendAzureRmKey: 'dev.terraform.tfstate'
-  - task: TerraformTask@5
-    inputs:
-      provider: 'azurerm'
-      command: 'custom'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
-      outputTo: 'console'
-      customCommand: 'fmt'
-      environmentServiceNameAzureRM: 'AZ-ADO-connection-16'
-      environmentAzureRmOverrideSubscriptionID: '00ad737d-c579-441c-8386-0551f3fc4bf9'
-  - task: TerraformTask@5
-    inputs:
-      provider: 'azurerm'
-      command: 'validate'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
-  - task: TerraformTask@5
-    inputs:
-      provider: 'azurerm'
-      command: 'plan'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
-      environmentServiceNameAzureRM: 'AZ-ADO-connection-16'
-      environmentAzureRmOverrideSubscriptionID: '00ad737d-c579-441c-8386-0551f3fc4bf9'
-
-- job: ManualValidation
-  displayName: MannualValidation
-  dependsOn: InitToPlan
-  pool: server
+  displayName: InitToPlan1
   steps:
-  - task: ManualValidation@1
+  - task: InfracostSetup@2
     inputs:
-      notifyUsers: 'Kulvinder@harshitasumit1gmail.onmicrosoft.com'
-      approvers: 'Kulvinder@harshitasumit1gmail.onmicrosoft.com'
+      apiKey: 'ico-8K99zlr1lbTspduTyx0uihsPwtQtLOYZ'
+      version: '0.10.x'
+#   - task: TerraformTask@5
+#     inputs:
+#       provider: 'azurerm'
+#       command: 'init'
+#       workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+#       backendServiceArm: 'AZ-ADO-connection-16'
+#       backendAzureRmOverrideSubscriptionID: '00ad737d-c579-441c-8386-0551f3fc4bf9'
+#       backendAzureRmResourceGroupName: 'rgkulvinder'
+#       backendAzureRmStorageAccountName: 'stgkulvinder'
+#       backendAzureRmContainerName: 'container1'
+#       backendAzureRmKey: 'dev.terraform.tfstate'
+#   - task: TerraformTask@5
+#     inputs:
+#       provider: 'azurerm'
+#       command: 'custom'
+#       workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+#       outputTo: 'console'
+#       customCommand: 'fmt'
+#       environmentServiceNameAzureRM: 'AZ-ADO-connection-16'
+#       environmentAzureRmOverrideSubscriptionID: '00ad737d-c579-441c-8386-0551f3fc4bf9'
+#   - task: TerraformTask@5
+#     inputs:
+#       provider: 'azurerm'
+#       command: 'validate'
+#       workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+#   - task: TerraformTask@5
+#     inputs:
+#       provider: 'azurerm'
+#       command: 'plan'
+#       workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+#       environmentServiceNameAzureRM: 'AZ-ADO-connection-16'
+#       environmentAzureRmOverrideSubscriptionID: '00ad737d-c579-441c-8386-0551f3fc4bf9'
 
-- job: Apply
-  displayName: Apply
-  dependsOn: ManualValidation
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-  steps:
-  - task: TerraformTask@5
-    inputs:
-      provider: 'azurerm'
-      command: 'init'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
-      backendServiceArm: 'AZ-ADO-connection-16'
-      backendAzureRmOverrideSubscriptionID: '00ad737d-c579-441c-8386-0551f3fc4bf9'
-      backendAzureRmResourceGroupName: 'rgkulvinder'
-      backendAzureRmStorageAccountName: 'stgkulvinder'
-      backendAzureRmContainerName: 'container1'
-      backendAzureRmKey: 'dev.terraform.tfstate'
+# - job: ManualValidation
+#   displayName: MannualValidation
+#   dependsOn: InitToPlan
+#   pool: server
+#   steps:
+#   - task: ManualValidation@1
+#     inputs:
+#       notifyUsers: 'Kulvinder@harshitasumit1gmail.onmicrosoft.com'
+#       approvers: 'Kulvinder@harshitasumit1gmail.onmicrosoft.com'
 
-  - task: TerraformTask@5
-    inputs:
-      provider: 'azurerm'
-      command: 'apply'
-      workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
-      commandOptions: '--auto-approve'
-      environmentServiceNameAzureRM: 'AZ-ADO-connection-16'
-      environmentAzureRmOverrideSubscriptionID: '00ad737d-c579-441c-8386-0551f3fc4bf9'
+# - job: Apply
+  # displayName: Apply
+  # dependsOn: ManualValidation
+  # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  # steps:
+  # - task: TerraformTask@5
+  #   inputs:
+  #     provider: 'azurerm'
+  #     command: 'init'
+  #     workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+  #     backendServiceArm: 'AZ-ADO-connection-16'
+  #     backendAzureRmOverrideSubscriptionID: '00ad737d-c579-441c-8386-0551f3fc4bf9'
+  #     backendAzureRmResourceGroupName: 'rgkulvinder'
+  #     backendAzureRmStorageAccountName: 'stgkulvinder'
+  #     backendAzureRmContainerName: 'container1'
+  #     backendAzureRmKey: 'dev.terraform.tfstate'
+
+  # - task: TerraformTask@5
+  #   inputs:
+  #     provider: 'azurerm'
+  #     command: 'apply'
+  #     workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+  #     commandOptions: '--auto-approve'
+  #     environmentServiceNameAzureRM: 'AZ-ADO-connection-16'
+  #     environmentAzureRmOverrideSubscriptionID: '00ad737d-c579-441c-8386-0551f3fc4bf9'
