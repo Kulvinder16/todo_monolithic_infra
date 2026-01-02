@@ -4,18 +4,52 @@ trigger:
 
 pool: default
 
-jobs:
-- job: InitToPlan
-  displayName: InitToPlan1
-  steps:
-  - task: InfracostSetup@2
-    inputs:
-      apiKey: 'ico-8K99zlr1lbTspduTyx0uihsPwtQtLOYZ'
-      version: '0.10.x'
-  - task: PowerShell@2
-    inputs:
-      targetType: 'inline'
-      script: 'infracost breakdown --path .'
+stages:
+- stage: Pre_commit_and_Static_analysis_stage
+  displayName: Pre-commit and Static analysis stage
+  jobs:
+  - job: TerraformValidate
+    displayName: Terraform_validate
+    steps:
+    - task: TerraformTask@5
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+
+  - job: TerraformFMT
+    displayName: TerraformFMT
+    steps:
+    - task: TerraformTask@5
+      inputs:
+        provider: 'azurerm'
+        command: 'custom'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+        outputTo: 'console'
+        customCommand: 'fmt'
+        environmentServiceNameAzureRM: 'AZ-ADO-connection-16'
+        environmentAzureRmOverrideSubscriptionID: '00ad737d-c579-441c-8386-0551f3fc4bf9'
+
+  - job: TFsec
+    displayName: TFsec
+    steps:
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: 'tfsec .'
+
+
+
+
+
+
+
+
+
+# jobs:
+# - job: InitToPlan
+#   displayName: InitToPlan1
+#   steps:
 #   - task: TerraformTask@5
 #     inputs:
 #       provider: 'azurerm'
@@ -60,27 +94,38 @@ jobs:
 #       approvers: 'Kulvinder@harshitasumit1gmail.onmicrosoft.com'
 
 # - job: Apply
-  # displayName: Apply
-  # dependsOn: ManualValidation
-  # condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-  # steps:
-  # - task: TerraformTask@5
-  #   inputs:
-  #     provider: 'azurerm'
-  #     command: 'init'
-  #     workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
-  #     backendServiceArm: 'AZ-ADO-connection-16'
-  #     backendAzureRmOverrideSubscriptionID: '00ad737d-c579-441c-8386-0551f3fc4bf9'
-  #     backendAzureRmResourceGroupName: 'rgkulvinder'
-  #     backendAzureRmStorageAccountName: 'stgkulvinder'
-  #     backendAzureRmContainerName: 'container1'
-  #     backendAzureRmKey: 'dev.terraform.tfstate'
+#   displayName: Apply
+#   dependsOn: ManualValidation
+#   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+#   steps:
+#   - task: TerraformTask@5
+#     inputs:
+#       provider: 'azurerm'
+#       command: 'init'
+#       workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+#       backendServiceArm: 'AZ-ADO-connection-16'
+#       backendAzureRmOverrideSubscriptionID: '00ad737d-c579-441c-8386-0551f3fc4bf9'
+#       backendAzureRmResourceGroupName: 'rgkulvinder'
+#       backendAzureRmStorageAccountName: 'stgkulvinder'
+#       backendAzureRmContainerName: 'container1'
+#       backendAzureRmKey: 'dev.terraform.tfstate'
 
-  # - task: TerraformTask@5
-  #   inputs:
-  #     provider: 'azurerm'
-  #     command: 'apply'
-  #     workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
-  #     commandOptions: '--auto-approve'
-  #     environmentServiceNameAzureRM: 'AZ-ADO-connection-16'
-  #     environmentAzureRmOverrideSubscriptionID: '00ad737d-c579-441c-8386-0551f3fc4bf9'
+#   - task: TerraformTask@5
+#     inputs:
+#       provider: 'azurerm'
+#       command: 'apply'
+#       workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+#       commandOptions: '--auto-approve'
+#       environmentServiceNameAzureRM: 'AZ-ADO-connection-16'
+#       environmentAzureRmOverrideSubscriptionID: '00ad737d-c579-441c-8386-0551f3fc4bf9'
+
+
+
+#   - task: InfracostSetup@2
+#     inputs:
+#       apiKey: 'ico-8K99zlr1lbTspduTyx0uihsPwtQtLOYZ'
+#       version: '0.10.x'
+#   - task: PowerShell@2
+#     inputs:
+#       targetType: 'inline'
+#       script: 'infracost breakdown --path .'
