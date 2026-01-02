@@ -7,9 +7,9 @@ pool: default
 stages:
 - stage: Pre_commit_and_Static_analysis_stage
   displayName: Pre-commit and Static analysis stage
-  jobs:
-  - job: Terraform_init
-    displayName: init
+  jobs:        
+  - job: TerraformValidate
+    displayName: Terraform_validate
     steps:
     - task: TerraformTask@5
       inputs:
@@ -22,12 +22,6 @@ stages:
         backendAzureRmStorageAccountName: 'stgkulvinder'
         backendAzureRmContainerName: 'container1'
         backendAzureRmKey: 'dev.terraform.tfstate'
-        
-  - job: TerraformValidate
-    displayName: Terraform_validate
-    dependsOn:
-      - Terraform_init
-    steps:
     - task: TerraformTask@5
       inputs:
         provider: 'azurerm'
