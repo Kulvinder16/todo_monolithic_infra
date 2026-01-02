@@ -25,6 +25,8 @@ stages:
         
   - job: TerraformValidate
     displayName: Terraform_validate
+    dependsOn:
+      - Terraform_init
     steps:
     - task: TerraformTask@5
       inputs:
