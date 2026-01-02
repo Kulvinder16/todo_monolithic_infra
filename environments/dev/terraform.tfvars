@@ -11,17 +11,17 @@ resource_groups = {
 
 }
 
-storage_accounts = {
-  s1 = {
-    name                     = "stg1990"
-    resource_group_name      = "rg_1"
-    location                 = "canadacentral"
-    account_tier             = "Standard"
-    account_replication_type = "GRS"
+# storage_accounts = {
+#   s1 = {
+#     name                     = "stg1990"
+#     resource_group_name      = "rg_1"
+#     location                 = "canadacentral"
+#     account_tier             = "Standard"
+#     account_replication_type = "GRS"
 
-    tags = {
-    environment = "dev" }
-} }
+#     tags = {
+#     environment = "dev" }
+# } }
 
 vnets = {
   v1 = {
