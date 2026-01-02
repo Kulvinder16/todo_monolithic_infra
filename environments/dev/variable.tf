@@ -8,16 +8,16 @@ variable "resource_groups" {
 }
 
 
-variable "storage_accounts" {
-  type = map(object({
-    name                     = string
-    resource_group_name      = string
-    location                 = string
-    account_tier             = string
-    account_replication_type = string
-    tags                     = map(string)
-  }))
-}
+# variable "storage_accounts" {
+#   type = map(object({
+#     name                     = string
+#     resource_group_name      = string
+#     location                 = string
+#     account_tier             = string
+#     account_replication_type = string
+#     tags                     = map(string)
+#   }))
+# }
 
 variable "vnets" {
   type = map(object({
@@ -56,10 +56,13 @@ variable "kv" {
 }
 
 variable "vms" {
+  type = map(object({}))
 }
 
 variable "sql_server" {
+type = map(object({}))
 }
 
 variable "sql_database16" {
+ type = map(object({}))
 }
